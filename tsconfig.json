@@ -7,10 +7,12 @@
     "skipLibCheck": true,
     "useDefineForClassFields": true,
 
-    /* shadcn */
+    /* alias */
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
+    "ignoreDeprecations": "6.0",
 
     /* modules */
     "moduleDetection": "force",
