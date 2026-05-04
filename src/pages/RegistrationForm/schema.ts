@@ -9,6 +9,17 @@ export const SENIORITY_LEVELS = [
   'Senior',
 ] as const;
 
+export const defaultUserFormValues = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  role: '' as (typeof ROLES)[number],
+  seniorityLevel: '' as (typeof SENIORITY_LEVELS)[number],
+  skills: [] as string[],
+  bio: '',
+  agreement: false as boolean,
+};
+
 export const userSchema = z.object({
   firstName: z
     .string()

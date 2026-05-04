@@ -2,7 +2,13 @@ import { useForm } from '@tanstack/react-form';
 import { Link } from 'react-router-dom';
 
 import { FieldInfo } from '@/components/form/FieldInfo';
-import { userSchema, ROLES, SENIORITY_LEVELS, SKILS } from './schema';
+import {
+  userSchema,
+  ROLES,
+  SENIORITY_LEVELS,
+  SKILS,
+  defaultUserFormValues,
+} from './schema';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,16 +26,7 @@ import { Textarea } from '@/components/ui/textarea';
 
 export default function RegistrationForm() {
   const form = useForm({
-    defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      role: '' as (typeof ROLES)[number],
-      seniorityLevel: '' as (typeof SENIORITY_LEVELS)[number],
-      skills: [] as string[],
-      bio: '',
-      agreement: false as boolean,
-    },
+    defaultValues: defaultUserFormValues,
     onSubmit: async ({ value }) => {
       console.log('Form data submitted:', value);
       alert('Success! Data printed to console.');
@@ -333,7 +330,7 @@ export default function RegistrationForm() {
         <div className="text-center border-t border-border/50 pt-6">
           <Link
             to="/"
-            className="text-sm text-muted-foreground hover:text-primary transition-colors font-medium flex items-center justify-center gap-2"
+            className="text-sm text-muted-foreground hover:text-primary transition-colors font-medium"
           >
             &larr; Back to Home
           </Link>
