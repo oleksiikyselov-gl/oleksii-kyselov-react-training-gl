@@ -27,6 +27,15 @@ import { Textarea } from '@/components/ui/textarea';
 export default function RegistrationForm() {
   const form = useForm({
     defaultValues: defaultUserFormValues,
+
+    onSubmitInvalid: () => {
+      const firstInvalidInput = document.querySelector(
+        '[aria-invalid="true"]'
+      ) as HTMLElement;
+
+      firstInvalidInput?.focus();
+    },
+
     onSubmit: async ({ value }) => {
       console.log('Form data submitted:', value);
       alert('Success! Data printed to console.');
@@ -75,6 +84,7 @@ export default function RegistrationForm() {
                       field.handleChange(field.state.value);
                     }}
                     onChange={e => field.handleChange(e.target.value)}
+                    aria-invalid={field.state.meta.errors.length > 0}
                     placeholder="John"
                     className={
                       hasError
@@ -110,6 +120,7 @@ export default function RegistrationForm() {
                       field.handleChange(field.state.value);
                     }}
                     onChange={e => field.handleChange(e.target.value)}
+                    aria-invalid={field.state.meta.errors.length > 0}
                     placeholder="Doe"
                     className={
                       hasError
@@ -146,6 +157,7 @@ export default function RegistrationForm() {
                       field.handleChange(field.state.value);
                     }}
                     onChange={e => field.handleChange(e.target.value)}
+                    aria-invalid={field.state.meta.errors.length > 0}
                     placeholder="example@mail.com"
                     className={
                       hasError
@@ -174,7 +186,10 @@ export default function RegistrationForm() {
                     field.handleChange(value as (typeof ROLES)[number])
                   }
                 >
-                  <SelectTrigger onBlur={field.handleBlur}>
+                  <SelectTrigger
+                    onBlur={field.handleBlur}
+                    aria-invalid={field.state.meta.errors.length > 0}
+                  >
                     <SelectValue placeholder="Select a role" />
                   </SelectTrigger>
                   <SelectContent>
@@ -201,6 +216,7 @@ export default function RegistrationForm() {
                 <Label>Seniority Level*</Label>
                 <RadioGroup
                   value={field.state.value}
+                  aria-invalid={field.state.meta.errors.length > 0}
                   onValueChange={value =>
                     field.handleChange(
                       value as (typeof SENIORITY_LEVELS)[number]
@@ -246,6 +262,7 @@ export default function RegistrationForm() {
                       <Checkbox
                         id={skill}
                         checked={field.state.value.includes(skill)}
+                        aria-invalid={field.state.meta.errors.length > 0}
                         onCheckedChange={checked => {
                           const nextValue = checked
                             ? [...field.state.value, skill]
@@ -301,6 +318,7 @@ export default function RegistrationForm() {
                   <Checkbox
                     id="agreement"
                     checked={field.state.value}
+                    aria-invalid={field.state.meta.errors.length > 0}
                     onCheckedChange={checked => field.handleChange(!!checked)}
                   />
                   <Label htmlFor="agreement" className="text-sm font-medium">
@@ -314,12 +332,11 @@ export default function RegistrationForm() {
 
           {/* Submit button */}
           <form.Subscribe
-            selector={state => [state.canSubmit, state.isSubmitting]}
-            children={([canSubmit, isSubmitting]) => (
+            selector={state => [state.isSubmitting]}
+            children={([isSubmitting]) => (
               <Button
                 type="submit"
                 className="w-full mt-6 h-12 text-base font-semibold shadow-md transition-all hover:shadow-lg"
-                disabled={!canSubmit}
               >
                 {isSubmitting ? 'Loading...' : 'Register'}
               </Button>
