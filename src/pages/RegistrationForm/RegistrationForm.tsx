@@ -284,6 +284,119 @@ export default function RegistrationForm() {
             )}
           />
 
+          {/* Hobbies (Array Field) */}
+          <form.Field
+            name="hobbies"
+            mode="array"
+            children={hobbiesField => (
+              <div className="space-y-4">
+                <Label>Hobbies</Label>
+
+                <div className="space-y-4">
+                  {!hobbiesField.state.value.length ? (
+                    <p className="text-sm text-muted-foreground italic">
+                      No hobbies added.
+                    </p>
+                  ) : (
+                    hobbiesField.state.value.map((_, i) => (
+                      <div
+                        key={i}
+                        className="flex flex-col gap-4 p-5 border border-border/50 rounded-xl bg-muted/10 relative"
+                      >
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="absolute top-2 right-2 h-8 w-8 p-0 text-muted-foreground hover:text-destructive"
+                          onClick={() => hobbiesField.removeValue(i)}
+                        >
+                          &times;
+                        </Button>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                          <form.Field
+                            name={`hobbies[${i}].name`}
+                            children={field => (
+                              <div className="space-y-2">
+                                <Label htmlFor={field.name}>Hobby Name</Label>
+                                <Input
+                                  id={field.name}
+                                  name={field.name}
+                                  value={field.state.value}
+                                  onBlur={field.handleBlur}
+                                  onChange={e =>
+                                    field.handleChange(e.target.value)
+                                  }
+                                  placeholder="e.g. Photography"
+                                />
+                                <FieldInfo field={field} />
+                              </div>
+                            )}
+                          />
+                          <form.Field
+                            name={`hobbies[${i}].yearsOfExperience`}
+                            children={field => (
+                              <div className="space-y-2">
+                                <Label htmlFor={field.name}>
+                                  Years of Experience
+                                </Label>
+                                <Input
+                                  id={field.name}
+                                  type="number"
+                                  name={field.name}
+                                  value={field.state.value as number}
+                                  onBlur={field.handleBlur}
+                                  onChange={e =>
+                                    field.handleChange(Number(e.target.value))
+                                  }
+                                />
+                                <FieldInfo field={field} />
+                              </div>
+                            )}
+                          />
+                        </div>
+                        <form.Field
+                          name={`hobbies[${i}].description`}
+                          children={field => (
+                            <div className="space-y-2">
+                              <Label htmlFor={field.name}>Description</Label>
+                              <Input
+                                id={field.name}
+                                name={field.name}
+                                value={field.state.value}
+                                onBlur={field.handleBlur}
+                                onChange={e =>
+                                  field.handleChange(e.target.value)
+                                }
+                                placeholder="Describe your hobby..."
+                              />
+                              <FieldInfo field={field} />
+                            </div>
+                          )}
+                        />
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    hobbiesField.pushValue({
+                      name: '',
+                      description: '',
+                      yearsOfExperience: 0,
+                    })
+                  }
+                >
+                  + Add hobby
+                </Button>
+              </div>
+            )}
+          />
+
           {/* Bio */}
           <form.Field
             name="bio"

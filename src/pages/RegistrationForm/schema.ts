@@ -18,6 +18,7 @@ export interface UserFormValues {
   skills: string[];
   bio: string;
   agreement: boolean;
+  hobbies: { name: string; description: string; yearsOfExperience: number }[];
 }
 
 export const defaultUserFormValues: UserFormValues = {
@@ -29,6 +30,7 @@ export const defaultUserFormValues: UserFormValues = {
   skills: [],
   bio: '',
   agreement: false,
+  hobbies: [],
 };
 
 export const userSchema = z.object({
@@ -58,6 +60,13 @@ export const userSchema = z.object({
   agreement: z.literal(true, {
     errorMap: () => ({ message: 'Agreement is required' }),
   }),
+  hobbies: z.array(
+    z.object({
+      name: z.string().min(1, 'Hobby name is required'),
+      description: z.string(),
+      yearsOfExperience: z.number().min(0, 'Must be positive'),
+    })
+  ).optional(),
 });
 
 export type RegistrationData = z.infer<typeof userSchema>;
