@@ -4,7 +4,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 export default defineConfig({
   plugins: [pluginReact()],
   source: {
-    // @ts-ignore
+    // @ts-expect-error unknown error below
     alias: {
       '@': './src',
     },

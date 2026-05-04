@@ -1,15 +1,14 @@
-import './App.css';
-import { Button } from '@/components/ui/button';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import RegistrationForm from './pages/RegistrationForm';
 
-const App = () => {
+export default function App() {
   return (
-    <div className="text-center">
-      <h1 className="underline text-2xl mb-4">React Training</h1>
-      <p>Start building amazing things with Rsbuild.</p>
-
-      <Button variant="outline">Button</Button>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/registration" element={<RegistrationForm />} />
+      </Routes>
+    </BrowserRouter>
   );
-};
-
-export default App;
+}
