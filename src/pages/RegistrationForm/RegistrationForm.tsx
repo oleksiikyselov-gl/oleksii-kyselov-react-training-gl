@@ -78,7 +78,7 @@ export default function RegistrationForm() {
                     placeholder="John"
                     className={
                       hasError
-                        ? 'border-destructive focus-visible:ring-destructive'
+                        ? 'border-destructive focus-visible:ring-destructive/50 focus-visible:border-destructive'
                         : ''
                     }
                   />
@@ -113,7 +113,7 @@ export default function RegistrationForm() {
                     placeholder="Doe"
                     className={
                       hasError
-                        ? 'border-destructive focus-visible:ring-destructive'
+                        ? 'border-destructive focus-visible:ring-destructive/50 focus-visible:border-destructive'
                         : ''
                     }
                   />
@@ -149,7 +149,7 @@ export default function RegistrationForm() {
                     placeholder="example@mail.com"
                     className={
                       hasError
-                        ? 'border-destructive focus-visible:ring-destructive'
+                        ? 'border-destructive focus-visible:ring-destructive/50 focus-visible:border-destructive'
                         : ''
                     }
                   />
