@@ -46,12 +46,12 @@ export function DatePicker({ selected, onSelect, className }: DatePickerProps) {
   }, [isOpen]);
 
   return (
-    <div className="relative w-full max-w-80" ref={containerRef}>
+    <div className="relative w-full" ref={containerRef}>
       <Button
         type="button"
         variant={'outline'}
         className={cn(
-          'w-full justify-start text-left font-normal h-10',
+          'w-full justify-start text-left font-normal h-8 px-2.5 py-1 text-sm',
           !selected && 'text-muted-foreground',
           className
         )}
@@ -81,12 +81,16 @@ export function DatePicker({ selected, onSelect, className }: DatePickerProps) {
             classNames={{
               caption_dropdowns: 'flex gap-2 justify-center items-center',
               dropdown:
-                'p-1 rounded-md border border-border bg-background text-sm',
+                'px-2 py-1 rounded-lg border border-input bg-card text-sm focus:outline-none focus:ring-2 focus:ring-ring cursor-pointer transition-colors hover:bg-accent',
               dropdown_month: 'font-medium',
               dropdown_year: 'font-medium',
               cell: 'p-1',
               caption_label: 'hidden',
               months: 'overflow-y-auto overflow-x-hidden',
+              day: 'h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md',
+              day_selected:
+                'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
+              day_today: 'bg-accent text-accent-foreground',
             }}
             className="w-full"
           />

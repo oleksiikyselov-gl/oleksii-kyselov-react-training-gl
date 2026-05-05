@@ -61,6 +61,7 @@ export default function RegistrationForm() {
             e.stopPropagation();
             form.handleSubmit();
           }}
+          noValidate
           className="space-y-6"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -75,7 +76,7 @@ export default function RegistrationForm() {
                   field.state.meta.isTouched && !field.state.meta.isValid;
 
                 return (
-                  <div className="space-y-2">
+                  <div className="space-y-2 max-w-80">
                     <Label htmlFor={field.name}>First Name*</Label>
                     <Input
                       id={field.name}
@@ -111,7 +112,7 @@ export default function RegistrationForm() {
                   field.state.meta.isTouched && !field.state.meta.isValid;
 
                 return (
-                  <div className="space-y-2">
+                  <div className="space-y-2 max-w-80">
                     <Label htmlFor={field.name}>Last Name*</Label>
                     <Input
                       id={field.name}
@@ -147,7 +148,7 @@ export default function RegistrationForm() {
                   field.state.meta.isTouched && !field.state.meta.isValid;
 
                 return (
-                  <div className="space-y-2">
+                  <div className="space-y-2 max-w-80">
                     <Label htmlFor={field.name}>Email*</Label>
                     <Input
                       id={field.name}
@@ -180,7 +181,7 @@ export default function RegistrationForm() {
                 onChange: userSchema.shape.birthDate,
               }}
               children={field => (
-                <div className="space-y-2">
+                <div className="space-y-2 max-w-80">
                   <Label>Birth Date</Label>
                   <DatePicker
                     selected={field.state.value}
