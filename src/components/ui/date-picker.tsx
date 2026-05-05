@@ -68,7 +68,7 @@ export function DatePicker({ selected, onSelect, className }: DatePickerProps) {
           <DayPicker
             mode="single"
             selected={selected}
-            month={selected}
+            defaultMonth={selected}
             onSelect={date => {
               onSelect(date);
               setIsOpen(false);
