@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { FieldInfo } from '@/components/form/FieldInfo';
 import {
   userSchema,
+  ROLE_SKILLS,
   ROLES,
   SENIORITY_LEVELS,
-  SKILS,
   defaultUserFormValues,
 } from './schema';
 
@@ -177,6 +177,18 @@ export default function RegistrationForm() {
             validators={{
               onChange: userSchema.shape.role,
             }}
+            listeners={{
+              onChange: ({ value }) => {
+                console.log(
+                  `Specialization changed to: ${value}, resetting skills...`
+                );
+                form.setFieldValue('skills', []);
+                form.setFieldMeta('skills', meta => ({
+                  ...meta,
+                  isTouched: false,
+                }));
+              },
+            }}
             children={field => (
               <div className="space-y-2">
                 <Label>Specialization*</Label>
@@ -254,33 +266,62 @@ export default function RegistrationForm() {
               onChange: userSchema.shape.skills,
             }}
             children={field => (
-              <div className="space-y-2">
-                <Label>Skills*</Label>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border border-border/50 bg-muted/20 p-5 rounded-xl transition-colors hover:border-border">
-                  {SKILS.map(skill => (
-                    <div key={skill} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={skill}
-                        checked={field.state.value.includes(skill)}
-                        aria-invalid={field.state.meta.errors.length > 0}
-                        onCheckedChange={checked => {
-                          const nextValue = checked
-                            ? [...field.state.value, skill]
-                            : field.state.value.filter(s => s !== skill);
-                          field.handleChange(nextValue);
-                        }}
-                      />
-                      <Label
-                        htmlFor={skill}
-                        className="text-sm font-medium cursor-pointer"
-                      >
-                        {skill}
-                      </Label>
+              <form.Subscribe
+                selector={state => state.values.role}
+                children={selectedRole => {
+                  const availableSkills = selectedRole
+                    ? ROLE_SKILLS[selectedRole]
+                    : [];
+
+                  if (!selectedRole) {
+                    return (
+                      <div className="space-y-2">
+                        <Label>Skills*</Label>
+                        <p className="text-sm text-muted-foreground italic border border-border/50 bg-muted/10 p-5 rounded-xl">
+                          Please select a specialization first to see available
+                          skills.
+                        </p>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div className="space-y-2">
+                      <Label>Skills*</Label>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border border-border/50 bg-muted/20 p-5 rounded-xl transition-colors hover:border-border">
+                        {availableSkills.map(skill => (
+                          <div
+                            key={skill}
+                            className="flex items-center space-x-2"
+                          >
+                            <Checkbox
+                              id={skill}
+                              checked={field.state.value.includes(skill)}
+                              aria-invalid={
+                                field.state.meta.errors.length > 0 &&
+                                field.state.meta.isTouched
+                              }
+                              onCheckedChange={checked => {
+                                const nextValue = checked
+                                  ? [...field.state.value, skill]
+                                  : field.state.value.filter(s => s !== skill);
+                                field.handleChange(nextValue);
+                              }}
+                            />
+                            <Label
+                              htmlFor={skill}
+                              className="text-sm font-medium cursor-pointer"
+                            >
+                              {skill}
+                            </Label>
+                          </div>
+                        ))}
+                      </div>
+                      <FieldInfo field={field} />
                     </div>
-                  ))}
-                </div>
-                <FieldInfo field={field} />
-              </div>
+                  );
+                }}
+              />
             )}
           />
 

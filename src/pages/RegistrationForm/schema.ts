@@ -1,7 +1,12 @@
 import { z } from 'zod';
 
 export const ROLES = ['Frontend', 'Backend', 'QA', 'DevOps'] as const;
-export const SKILS = ['React', 'TypeScript', 'Node.js', 'SQL'] as const;
+export const ROLE_SKILLS: Record<string, string[]> = {
+  Frontend: ['React', 'Vue', 'Angular', 'TypeScript', 'CSS/SASS'],
+  Backend: ['Node.js', 'Python', 'Java', 'SQL', 'MongoDB'],
+  QA: ['Cypress', 'Selenium', 'Jest', 'Postman', 'Jira'],
+  DevOps: ['Docker', 'Kubernetes', 'AWS', 'CI/CD', 'Linux'],
+};
 export const SENIORITY_LEVELS = [
   'Trainee',
   'Junior',
