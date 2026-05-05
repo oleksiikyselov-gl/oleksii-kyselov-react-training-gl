@@ -484,18 +484,31 @@ export default function RegistrationForm() {
             )}
           />
 
-          {/* Submit button */}
-          <form.Subscribe
-            selector={state => [state.isSubmitting]}
-            children={([isSubmitting]) => (
-              <Button
-                type="submit"
-                className="w-full mt-6 h-12 text-base font-semibold shadow-md transition-all hover:shadow-lg"
-              >
-                {isSubmitting ? 'Loading...' : 'Register'}
-              </Button>
-            )}
-          />
+          {/* Action buttons */}
+          <div className="flex flex-col gap-3 mt-8">
+            <form.Subscribe
+              selector={state => [state.isSubmitting]}
+              children={([isSubmitting]) => (
+                <Button
+                  type="submit"
+                  className="w-full h-12 text-base font-semibold shadow-md transition-all hover:shadow-lg"
+                >
+                  {isSubmitting ? 'Loading...' : 'Register'}
+                </Button>
+              )}
+            />
+            <Button
+              type="reset"
+              variant="outline"
+              className="w-full h-12 text-base font-semibold"
+              onClick={event => {
+                event.preventDefault();
+                form.reset();
+              }}
+            >
+              Reset
+            </Button>
+          </div>
         </form>
 
         <div className="text-center border-t border-border/50 pt-6">
