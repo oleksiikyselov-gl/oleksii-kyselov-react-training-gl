@@ -2,6 +2,7 @@ import { useForm } from '@tanstack/react-form';
 import { Link } from 'react-router-dom';
 
 import { FieldInfo } from '@/components/form/FieldInfo';
+import { DatePicker } from '@/components/ui/date-picker';
 import {
   userSchema,
   ROLE_SKILLS,
@@ -62,114 +63,137 @@ export default function RegistrationForm() {
           }}
           className="space-y-6"
         >
-          {/*  First Name */}
-          <form.Field
-            name="firstName"
-            validators={{
-              onChange: userSchema.shape.firstName,
-            }}
-            children={field => {
-              const hasError =
-                field.state.meta.isTouched && !field.state.meta.isValid;
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/*  First Name */}
+            <form.Field
+              name="firstName"
+              validators={{
+                onChange: userSchema.shape.firstName,
+              }}
+              children={field => {
+                const hasError =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
 
-              return (
-                <div className="space-y-2 max-w-80">
-                  <Label htmlFor={field.name}>First Name*</Label>
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={() => {
+                return (
+                  <div className="space-y-2">
+                    <Label htmlFor={field.name}>First Name*</Label>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      value={field.state.value}
+                      onBlur={() => {
+                        field.handleBlur();
+                        field.handleChange(field.state.value);
+                      }}
+                      onChange={e => field.handleChange(e.target.value)}
+                      aria-invalid={field.state.meta.errors.length > 0}
+                      placeholder="John"
+                      className={
+                        hasError
+                          ? 'border-destructive focus-visible:ring-destructive/50 focus-visible:border-destructive'
+                          : ''
+                      }
+                    />
+                    <FieldInfo field={field} />
+                  </div>
+                );
+              }}
+            />
+
+            {/*  Last Name */}
+            <form.Field
+              name="lastName"
+              validators={{
+                onChange: userSchema.shape.lastName,
+              }}
+              children={field => {
+                const hasError =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+
+                return (
+                  <div className="space-y-2">
+                    <Label htmlFor={field.name}>Last Name*</Label>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      value={field.state.value}
+                      onBlur={() => {
+                        field.handleBlur();
+                        field.handleChange(field.state.value);
+                      }}
+                      onChange={e => field.handleChange(e.target.value)}
+                      aria-invalid={field.state.meta.errors.length > 0}
+                      placeholder="Doe"
+                      className={
+                        hasError
+                          ? 'border-destructive focus-visible:ring-destructive/50 focus-visible:border-destructive'
+                          : ''
+                      }
+                    />
+                    <FieldInfo field={field} />
+                  </div>
+                );
+              }}
+            />
+
+            {/* ----- Field: Email ----- */}
+            <form.Field
+              name="email"
+              validators={{
+                onChange: userSchema.shape.email,
+              }}
+              children={field => {
+                const hasError =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+
+                return (
+                  <div className="space-y-2">
+                    <Label htmlFor={field.name}>Email*</Label>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      type="email"
+                      value={field.state.value}
+                      onBlur={() => {
+                        field.handleBlur();
+                        field.handleChange(field.state.value);
+                      }}
+                      onChange={e => field.handleChange(e.target.value)}
+                      aria-invalid={field.state.meta.errors.length > 0}
+                      placeholder="example@mail.com"
+                      className={
+                        hasError
+                          ? 'border-destructive focus-visible:ring-destructive/50 focus-visible:border-destructive'
+                          : ''
+                      }
+                    />
+                    <FieldInfo field={field} />
+                  </div>
+                );
+              }}
+            />
+
+            {/* ----- Field: Birth Date ----- */}
+            <form.Field
+              name="birthDate"
+              validators={{
+                onChange: userSchema.shape.birthDate,
+              }}
+              children={field => (
+                <div className="space-y-2">
+                  <Label>Birth Date</Label>
+                  <DatePicker
+                    selected={field.state.value}
+                    onSelect={date => {
+                      field.handleChange(date);
                       field.handleBlur();
-                      field.handleChange(field.state.value);
                     }}
-                    onChange={e => field.handleChange(e.target.value)}
-                    aria-invalid={field.state.meta.errors.length > 0}
-                    placeholder="John"
-                    className={
-                      hasError
-                        ? 'border-destructive focus-visible:ring-destructive/50 focus-visible:border-destructive'
-                        : ''
-                    }
                   />
                   <FieldInfo field={field} />
                 </div>
-              );
-            }}
-          />
-
-          {/*  Last Name */}
-          <form.Field
-            name="lastName"
-            validators={{
-              onChange: userSchema.shape.lastName,
-            }}
-            children={field => {
-              const hasError =
-                field.state.meta.isTouched && !field.state.meta.isValid;
-
-              return (
-                <div className="space-y-2 max-w-80">
-                  <Label htmlFor={field.name}>Last Name*</Label>
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={() => {
-                      field.handleBlur();
-                      field.handleChange(field.state.value);
-                    }}
-                    onChange={e => field.handleChange(e.target.value)}
-                    aria-invalid={field.state.meta.errors.length > 0}
-                    placeholder="Doe"
-                    className={
-                      hasError
-                        ? 'border-destructive focus-visible:ring-destructive/50 focus-visible:border-destructive'
-                        : ''
-                    }
-                  />
-                  <FieldInfo field={field} />
-                </div>
-              );
-            }}
-          />
-
-          {/* ----- Field: Email ----- */}
-          <form.Field
-            name="email"
-            validators={{
-              onChange: userSchema.shape.email,
-            }}
-            children={field => {
-              const hasError =
-                field.state.meta.isTouched && !field.state.meta.isValid;
-
-              return (
-                <div className="space-y-2 max-w-80">
-                  <Label htmlFor={field.name}>Email*</Label>
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    type="email"
-                    value={field.state.value}
-                    onBlur={() => {
-                      field.handleBlur();
-                      field.handleChange(field.state.value);
-                    }}
-                    onChange={e => field.handleChange(e.target.value)}
-                    aria-invalid={field.state.meta.errors.length > 0}
-                    placeholder="example@mail.com"
-                    className={
-                      hasError
-                        ? 'border-destructive focus-visible:ring-destructive/50 focus-visible:border-destructive'
-                        : ''
-                    }
-                  />
-                  <FieldInfo field={field} />
-                </div>
-              );
-            }}
-          />
+              )}
+            />
+          </div>
 
           {/*  Specialization */}
           <form.Field

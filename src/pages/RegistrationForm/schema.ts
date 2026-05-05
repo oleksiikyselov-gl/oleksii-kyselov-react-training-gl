@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { isAdult } from '@/lib/date-utils';
 
 export const ROLES = ['Frontend', 'Backend', 'QA', 'DevOps'] as const;
 export const ROLE_SKILLS: Record<string, string[]> = {
@@ -21,6 +22,7 @@ export interface UserFormValues {
   role: (typeof ROLES)[number] | '';
   seniorityLevel: (typeof SENIORITY_LEVELS)[number] | '';
   skills: string[];
+  birthDate?: Date;
   bio: string;
   agreement: boolean;
   hobbies: { name: string; description: string; yearsOfExperience: number }[];
@@ -33,6 +35,7 @@ export const defaultUserFormValues: UserFormValues = {
   role: '',
   seniorityLevel: '',
   skills: [],
+  birthDate: undefined,
   bio: '',
   agreement: false,
   hobbies: [],
@@ -61,17 +64,26 @@ export const userSchema = z.object({
     errorMap: () => ({ message: 'Select a seniority level' }),
   }),
   skills: z.array(z.string()).min(1, 'Select at least one skill'),
+  birthDate: z
+    .date()
+    .optional()
+    .refine(date => {
+      if (!date) return true;
+      return isAdult(date);
+    }, 'You must be at least 18 years old'),
   bio: z.string().max(200, 'Maximum 200 characters').optional(),
   agreement: z.literal(true, {
     errorMap: () => ({ message: 'Agreement is required' }),
   }),
-  hobbies: z.array(
-    z.object({
-      name: z.string().min(1, 'Hobby name is required'),
-      description: z.string(),
-      yearsOfExperience: z.number().min(0, 'Must be positive'),
-    })
-  ).optional(),
+  hobbies: z
+    .array(
+      z.object({
+        name: z.string().min(1, 'Hobby name is required'),
+        description: z.string(),
+        yearsOfExperience: z.number().min(0, 'Must be positive'),
+      })
+    )
+    .optional(),
 });
 
 export type RegistrationData = z.infer<typeof userSchema>;
