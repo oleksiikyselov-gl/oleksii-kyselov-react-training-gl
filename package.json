@@ -1,6 +1,7 @@
 {
   "name": "oleksii-kyselov-react-training-gl",
   "version": "1.0.0",
+  "homepage": "https://oleksiikyselov-gl.github.io/oleksii-kyselov-react-training-gl/",
   "private": true,
   "type": "module",
   "scripts": {
