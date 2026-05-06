@@ -410,10 +410,10 @@ export default function RegistrationForm() {
                                   id={field.name}
                                   type="number"
                                   name={field.name}
-                                  value={field.state.value as number}
+                                  value={field.state.value}
                                   onBlur={field.handleBlur}
                                   onChange={e =>
-                                    field.handleChange(Number(e.target.value))
+                                    field.handleChange(e.target.valueAsNumber)
                                   }
                                 />
                                 <FieldInfo field={field} />
