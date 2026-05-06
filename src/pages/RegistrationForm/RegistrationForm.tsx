@@ -1,5 +1,5 @@
 import { useForm } from '@tanstack/react-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { FieldInfo } from '@/components/form/FieldInfo';
 import { DatePicker } from '@/components/ui/date-picker';
@@ -9,7 +9,9 @@ import {
   ROLES,
   SENIORITY_LEVELS,
   defaultUserFormValues,
+  type RegistrationData,
 } from './schema';
+import { useUserStore } from '@/store/userStore';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -26,6 +28,9 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 
 export default function RegistrationForm() {
+  const navigate = useNavigate();
+  const setUserData = useUserStore((state) => state.setUserData);
+
   const form = useForm({
     defaultValues: defaultUserFormValues,
 
@@ -38,8 +43,12 @@ export default function RegistrationForm() {
     },
 
     onSubmit: async ({ value }) => {
-      console.log('Form data submitted:', value);
-      alert('Success! Data printed to console.');
+      // При успешном сабмите Zod гарантирует валидность данных,
+      // поэтому мы можем безопасно привести value к RegistrationData
+      setUserData(value as RegistrationData);
+      
+      // Перенаправляем пользователя на главную страницу
+      navigate('/');
     },
   });
 
