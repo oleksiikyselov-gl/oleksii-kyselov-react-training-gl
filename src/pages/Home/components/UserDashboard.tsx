@@ -25,7 +25,7 @@ export function UserDashboard({ userData, onClear }: UserDashboardProps) {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-muted/20 p-4">
       <Card className="w-full max-w-2xl shadow-lg">
-        <CardHeader className="flex flex-row items-center justify-center gap-4">
+        <CardHeader className="flex items-center justify-center gap-4">
           <Avatar className="h-16 w-16">
             <AvatarFallback className="text-xl font-bold bg-primary text-primary-foreground">
               {initials}
@@ -70,7 +70,7 @@ export function UserDashboard({ userData, onClear }: UserDashboardProps) {
             </div>
           )}
 
-          {userData.skills.length > 0 && (
+          {userData.skills?.length > 0 && (
             <div className="space-y-2">
               <p className="text-sm font-medium text-muted-foreground">
                 Skills
@@ -85,7 +85,7 @@ export function UserDashboard({ userData, onClear }: UserDashboardProps) {
             </div>
           )}
 
-          {userData.hobbies.length > 0 && (
+          {userData.hobbies?.length > 0 && (
             <div className="space-y-3">
               <p className="text-sm font-medium text-muted-foreground">
                 Hobbies

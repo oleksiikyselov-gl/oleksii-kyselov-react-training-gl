@@ -29,7 +29,7 @@ import { Textarea } from '@/components/ui/textarea';
 
 export default function RegistrationForm() {
   const navigate = useNavigate();
-  const setUserData = useUserStore((state) => state.setUserData);
+  const setUserData = useUserStore(state => state.setUserData);
 
   const form = useForm({
     defaultValues: defaultUserFormValues,
@@ -43,11 +43,7 @@ export default function RegistrationForm() {
     },
 
     onSubmit: async ({ value }) => {
-      // При успешном сабмите Zod гарантирует валидность данных,
-      // поэтому мы можем безопасно привести value к RegistrationData
       setUserData(value as RegistrationData);
-      
-      // Перенаправляем пользователя на главную страницу
       navigate('/');
     },
   });
